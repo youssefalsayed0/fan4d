@@ -8,7 +8,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API;
 export async function fetchPointsTransactions() {
   try {
     const locale = cookies().get('NEXT_LOCALE')?.value || "ar";
-    const tokenCookie = cookies().get("next-auth.session-token")?.value;
+    const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
     const token = await decode({
       token: tokenCookie,
       secret: process.env.NEXTAUTH_SECRET!,

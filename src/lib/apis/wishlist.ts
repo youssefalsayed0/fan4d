@@ -10,7 +10,7 @@ export async function fetchWishlist() {
   try {
     revalidatePath("/wishlist"); // Ensure the page is updated each time it's visited
     const locale = cookies().get("NEXT_LOCALE")?.value || "ar";
-    const tokenCookie = cookies().get("next-auth.session-token")?.value;
+    const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
 
     const token = await decode({
       token: tokenCookie,

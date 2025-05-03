@@ -5,7 +5,7 @@ import { decode } from "next-auth/jwt";
 import { CardLocation } from "./_components/card-location";
 
 const Page = async () => {
-	const tokenCookie = cookies().get("next-auth.session-token")?.value;
+	const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
 	const token = await decode({ token: tokenCookie, secret: process.env.NEXTAUTH_SECRET! });
 	const locale = await getLocale();
 

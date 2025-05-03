@@ -9,7 +9,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API;
 export const storeAction = async (fields: storeFields) => {
   
 
-  const tokenCookie = cookies().get("next-auth.session-token")?.value;
+  const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
   const token = await decode({
     token: tokenCookie,
     secret: process.env.NEXTAUTH_SECRET!,
@@ -44,7 +44,7 @@ export const storeAction = async (fields: storeFields) => {
 export const deleteLocationAction = async (id: number) => {
   
 
-  const tokenCookie = cookies().get('next-auth.session-token')?.value;
+  const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
   const token = await decode({ token: tokenCookie, secret: process.env.NEXTAUTH_SECRET! });
 
   // إنشاء FormData وإضافة الـ id
@@ -70,7 +70,7 @@ export const deleteLocationAction = async (id: number) => {
 export const storeUpdataAction = async (fields: storeFields, selectedLocationId: string | number | null) => {
   
 
-  const tokenCookie = cookies().get("next-auth.session-token")?.value;
+  const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
   const token = await decode({
     token: tokenCookie,
     secret: process.env.NEXTAUTH_SECRET!,

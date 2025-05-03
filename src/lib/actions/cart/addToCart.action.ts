@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache"; // ✅ Import this
 const BASE_URL = process.env.NEXT_PUBLIC_API;
 
 export const addToCart = async (formData: FormData) => {
-  const tokenCookie = cookies().get("next-auth.session-token")?.value;
+  const tokenCookie = cookies().get("next-auth.session-token")?.value || cookies().get("__Secure-next-auth.session-token")?.value;
   const token = await decode({
     token: tokenCookie,
     secret: process.env.NEXTAUTH_SECRET!,

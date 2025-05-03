@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -52,10 +53,8 @@ const ContactForm = ({ product }: ContactFormProps) => {
 	};
 
 	const handleCountChange = (newCount: number) => {
-		if (newCount >= product?.custom_quantity_from && newCount <= product?.custom_quantity_to) {
-			// form.setValue("count", newQuantity); // Ensure that `count` is updated
-			// setTotalPrice(newQuantity);
-			setCount(newCount); // تحديث count
+		if (!isNaN(newCount) && newCount >= 1) {
+			setCount(newCount);
 		}
 	};
 
@@ -64,9 +63,9 @@ const ContactForm = ({ product }: ContactFormProps) => {
 		const formData = new FormData(ref.current);
 
 		formData.append("product_id", product?.id.toString());
-		if ( selectedQuantityObj?.id !== undefined) {
+		if (selectedQuantityObj?.id !== undefined) {
 			formData.append("quantity_id", selectedQuantityObj?.id.toString());
-		  };
+		}
 		formData.append("count", count.toString());
 
 		// const selectedOptions = product?.attributes
@@ -135,7 +134,7 @@ const ContactForm = ({ product }: ContactFormProps) => {
 			return () => clearTimeout(delay);
 		}
 	}, [quantity, onSubmit]);
-	
+
 	const stripHtml = (html: string) => html?.replace(/<[^>]*>/g, "") || "";
 
 	return (
@@ -147,8 +146,11 @@ const ContactForm = ({ product }: ContactFormProps) => {
 					</div>
 					<div className="block md:flex gap-x-[15px] items-center">
 						<p className="md:text-[2rem] text-[1.2rem] font-bold text-normal">
-							{totalPrice} {t("Saudi-Riyal")}
+							{product?.price} {t("Saudi-Riyal")}
 						</p>
+						{/* 		<p className="md:text-[2rem] text-[1.2rem] font-bold text-normal">
+							{totalPrice} {t("Saudi-Riyal")}
+						</p> */}
 						{/* <p className="md:text-[1.5rem] text-[1rem] font-bold text-text-placeholder line-through py-[6px] md:py-0">
               120 {t("Saudi-Riyal")}
             </p> */}
@@ -334,15 +336,15 @@ const ContactForm = ({ product }: ContactFormProps) => {
 															{...field}
 															value={count} // ربط مع count فقط
 															onChange={(e) => handleCountChange(Number(e.target.value))}
-															min="1"
 															className="w-[50px] text-center shadow-none border-none"
+															min={1}
 														/>
 														<FormMessage />
 													</FormItem>
 												)}
 											/>
 
-											<Button className="bg-[#F1F4F4] p-[0px] w-[40px] h-[40px] rounded-sm" onClick={() => handleCountChange(count - 1)}>
+											<Button className="bg-[#F1F4F4] p-[0px] w-[40px] h-[40px] rounded-sm" onClick={() => handleCountChange(count - 1)} disabled={count <= 1}>
 												<img src="/assets/icons/Minus.svg" alt="icon" />
 											</Button>
 										</div>

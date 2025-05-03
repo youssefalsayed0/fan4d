@@ -75,6 +75,7 @@ const ContactForm = () => {
     mutate(formData, {
       onSettled: (data, error) => {
         if (error) {
+          console.log("error", error);
           toast({
             title: t("Sending-Error"),
             description: error.message || t("Unexpected-Error"),
